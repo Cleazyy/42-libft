@@ -6,7 +6,7 @@
 #    By: fluchten <fluchten@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 15:03:07 by fluchten          #+#    #+#              #
-#    Updated: 2023/01/25 19:02:37 by fluchten         ###   ########.fr        #
+#    Updated: 2023/02/18 15:08:49 by fluchten         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,14 +65,13 @@ SRCS_BONUS = ft_lstadd_back_bonus.c \
 			ft_lstnew_bonus.c \
 			ft_lstsize_bonus.c
 
-OBJS = $(addprefix ${OBJS_DIR}/, ${SRCS:%.c=%.o})
-OBJS_BONUS = $(addprefix ${OBJS_DIR}/, ${SRCS_BONUS:%.c=%.o})
+OBJS = ${SRCS:.c=.o}
+OBJS_BONUS = ${SRCS_BONUS:.c=.o}
 
 all: ${NAME}
 
-${OBJS_DIR}/%.o: ${SRCS_DIR}/%.c
-	@mkdir -p ${@D}
-	${CC} ${CFLAGS} -I ${INC_DIR} -c $< -o $@
+%.o: %.c
+	${CC} ${CFLAGS} -c $< -o $@
 
 ${NAME}: ${OBJS}
 	ar -rcs ${NAME} ${OBJS}
@@ -81,7 +80,7 @@ bonus: ${OBJS} ${OBJS_BONUS}
 	ar -rcs ${NAME} ${OBJS} ${OBJS_BONUS}
 
 clean:
-	${RM} ${OBJS_DIR}
+	${RM} ${OBJS} ${OBJS_BONUS}
 
 fclean: clean
 	${RM} ${NAME}
